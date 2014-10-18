@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sticky Notes</title>
+		<!--<link rel="stylesheet" href="bootstrap.css"/>-->
+		<link rel="stylesheet" href="style.css"/>
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"/>
+		<link href='http://fonts.googleapis.com/css?family=Just+Another+Hand' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div id="main-wrapper">
+			<ul>  
+				<li class="yellow">  
+					<a href="#">  
+						<h2>Title #1</h2>  
+	      				<p>Text Content #1</p>
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a>  
+	  			</li>  
+	  			<li class="blue">  
+	    			<a href="#">  
+	      				<h2>Title #2</h2>  
+	      				<p>Text Content #2</p> 
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a> 
+	  			</li>
+				<li class="yellow">  
+	    			<a href="#">  
+	      				<h2>Title #3</h2>  
+	      				<p>Text Content #3</p>  
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a> 
+	  			</li>
+				<li class="green">  
+	    			<a href="#">  
+	      				<h2>Title #4</h2>  
+	      				<p>Text Content #4</p>  
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a>
+	  			</li>
+				<li class="red">  
+	    			<a href="#">  
+	      				<h2>Title #5</h2>  
+	      				<p>Text Content #5</p>  
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a> 
+	  			</li>
+				<li class="blue">  
+	    			<a href="#">  
+	      				<h2>Title #6</h2>  
+	      				<p>Text Content #6</p>  
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a> 
+	  			</li>
+				<li class="yellow">  
+	    			<a href="#">  
+	      				<h2>Title #7</h2>  
+	      				<p>Text Content #7</p>  
+						<div class="actions-container">
+							<i class="icon-remove"></i>
+						</div>
+	    			</a> 
+	  			</li>
+			</ul>
+			<button class="new-note">New Note</button>
+			<div class="centered-form-container">
+				<form id="formOne" action="#" method="post" class="form-horizontal">
+					<legend>New Note:</legend>
+					<div class="control-group">
+						<div class="controls">
+							<input type="text" name="title" placeholder="Title">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+						<textarea name="content"></textarea>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button class="submit" type="submit">Create</button>
+					</div>
+				</form>
+			</div>
+			<div class="centered-form-container-two">
+				<form id="formTwo" action="#" method="post" class="form-horizontal">
+					<legend>Edit Note:</legend>
+					<div class="control-group">
+						<div class="controls">
+							<input type="text" name="title" placeholder="Title">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+						<textarea name="content"></textarea>
+						</div>
+					</div>
+					<div class="form-actions">
+						<button class="submit" type="submit">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="jquery-1.10.1.min.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>
