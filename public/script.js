@@ -1,7 +1,13 @@
-var formOneOpen = false;
-var formTwoOpen = false;
-var editedNote;
-var editing = false;
+var socket = io(), //load socket.io
+	formOneOpen = false,
+	formTwoOpen = false,
+	editedNote,
+	editing = false;
+function addNote(title, content, color){
+	// Add new note to the end of the list
+	var newNote = $('<li class="'+noteClass+'"><a><h2>'+noteTitle+'</h2><p>'+noteContent+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
+	$("ul").append(newNote);
+}
 function toggleFormOne(){
 	//$(".centered-form-container").toggle();
 	if(formOneOpen){
@@ -74,9 +80,10 @@ $(document).ready(function(){
 			noteClass="red";
 		}
 		event.preventDefault();
-		// Add new note to the end of the list
-		var newNote = $('<li class="'+noteClass+'"><a><h2>'+noteTitle+'</h2><p>'+noteContent+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
-		$("ul").append(newNote);
+		// tell the server a note was added, pass its title, content, and color
+		socket.emit("add note", noteTitle, noteContent, noteClass);
+		// call function to add note
+		addNote(noteTitle, noteContent, noteClass);
 		// clear the form and hide it
 		toggleFormOne();
 		clearForm();

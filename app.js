@@ -11,6 +11,14 @@ app.get('/', function(req, res){
 	res.sendFile(path.join(__dirname, './', 'index.html'));
 });
 
-app.listen(3000, function(){
+io.sockets.on("connection", function(client){
+	console.log("client connected");
+	client.on("add note", function(title, content, color){
+		console.log("Attempting to add note with title " + title + " to Redis list");
+		redisClient.lpush("notes", JSON.stringify([title, content, color]));
+	});
+});
+
+http.listen(3000, function(){
 	console.log("Listening on port 3000...");
 });
