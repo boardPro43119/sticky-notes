@@ -14,6 +14,7 @@ app.get('/', function(req, res){
 io.sockets.on("connection", function(client){
 	console.log("client connected");
 	redisClient.lrange("notes", 0, -1, function(err, notes){
+		notes.reverse();
 		notes.forEach(function(note){
 			note = JSON.parse(note);
 			client.emit("add note", note[0], note[1], note[2]);
