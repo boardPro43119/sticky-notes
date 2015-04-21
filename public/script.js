@@ -5,8 +5,8 @@ var socket = io(), //load socket.io
 	editing = false;
 function addNote(title, content, color){
 	// Add new note to the end of the list
-	var newNote = $('<li class="'+noteClass+'"><a><h2>'+noteTitle+'</h2><p>'+noteContent+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
-	$("ul").append(newNote);
+	var newNote = $('<li class="'+color+'"><a><h2>'+title+'</h2><p>'+content+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
+	$("ul").prepend(newNote);
 }
 function toggleFormOne(){
 	//$(".centered-form-container").toggle();
@@ -104,5 +104,10 @@ $(document).ready(function(){
 	$("#main-wrapper ul").on("click", ".actions-container", function(event){
 		event.stopPropagation();
 		$(this).closest("a").remove();
+	});
+
+	//
+	socket.on("add note", function(title, content, color){
+		addNote(title, content, color);
 	});
 });

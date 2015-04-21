@@ -13,6 +13,12 @@ app.get('/', function(req, res){
 
 io.sockets.on("connection", function(client){
 	console.log("client connected");
+	redisClient.lrange("notes", 0, -1, function(err, notes){
+		notes.forEach(function(note){
+			note = JSON.parse(note);
+			client.emit("add note", note[0], note[1], note[2]);
+		});
+	});
 	client.on("add note", function(title, content, color){
 		console.log("Attempting to add note with title " + title + " to Redis list");
 		redisClient.lpush("notes", JSON.stringify([title, content, color]));
