@@ -22,7 +22,7 @@
 			</ul>
 			<button class="new-note">New Note</button>
 			<div class="centered-form-container">
-				<form id="formOne" action="#" method="post" class="form-horizontal">
+				<form id="addForm" action="#" method="post" class="form-horizontal">
 					<legend>New Note:</legend>
 					<div class="control-group">
 						<div class="controls">
@@ -40,16 +40,16 @@
 				</form>
 			</div>
 			<div class="centered-form-container-two">
-				<form id="formTwo" action="#" method="post" class="form-horizontal">
+				<form id="editForm" action="#" method="post" class="form-horizontal">
 					<legend>Edit Note:</legend>
 					<div class="control-group">
 						<div class="controls">
-							<input type="text" name="title" placeholder="Title">
+							<input type="text" name="edit-title" placeholder="Title">
 						</div>
 					</div>
 					<div class="control-group">
 						<div class="controls">
-						<textarea name="content"></textarea>
+							<textarea name="edit-content"></textarea>
 						</div>
 					</div>
 					<div class="form-actions">

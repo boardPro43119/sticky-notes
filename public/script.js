@@ -1,6 +1,6 @@
 var socket = io(), //load socket.io
-	formOneOpen = false,
-	formTwoOpen = false,
+	addFormOpen = false,
+	editFormOpen = false,
 	editedNote,
 	editing = false;
 function addNote(title, content, color, id){
@@ -8,27 +8,27 @@ function addNote(title, content, color, id){
 	var newNote = $('<li id="'+id+'" class="'+color+'"><a><h2>'+title+'</h2><p>'+content+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
 	$("ul").prepend(newNote);
 }
-function toggleFormOne(){
+function toggleAddForm(){
 	//$(".centered-form-container").toggle();
-	if(formOneOpen){
+	if(addFormOpen){
 		$('.centered-form-container').hide();
-		formOneOpen = false;
+		addFormOpen = false;
 	}
 	else{
 		$('.centered-form-container').show();
-		formOneOpen = true;
+		addFormOpen = true;
 	}
 };
-function toggleFormTwo(title, content){
-	if(formTwoOpen){
+function toggleEditForm(title, content){
+	if(editFormOpen){
 		$('.centered-form-container-two').hide();
-		formTwoOpen = false;
+		editFormOpen = false;
 	}
 	else{
 		$('.centered-form-container-two').show();
-		formTwoOpen = true;
-		$('.centered-form-container-two').children('form').find('input[name=title]').val(title);
-		$('.centered-form-container-two').children('form').find('textarea[name=content]').val(content);
+		editFormOpen = true;
+		$('.centered-form-container-two').children('form').find('input[name=edit-title]').val(title);
+		$('.centered-form-container-two').children('form').find('textarea[name=edit-content]').val(content);
 		console.log(title);
 		console.log(content);
 	}
@@ -40,18 +40,18 @@ function clearForm(){
 $(document).ready(function(){
 	/*$('#form').hide();*/
 	$('.new-note').click(function(){
-		toggleFormOne();
+		toggleAddForm();
 		console.log("The button was clicked");
 	});
 	$('.centered-form-container').click(function(event){
 		if(event.target.nodeName === "DIV"){
-			toggleFormOne();
+			toggleAddForm();
 			clearForm();
 		}
 	});
 	$('.centered-form-container-two').click(function(event){
 		if(event.target.nodeName === "DIV"){
-			toggleFormTwo();
+			toggleEditForm();
 			clearForm();
 		}
 	});
@@ -60,9 +60,9 @@ $(document).ready(function(){
 		editedNote = $(this);
 		var title = editedNote.children("h2").text();
 		var content = editedNote.children("p").text();
-		toggleFormTwo(title, content);
+		toggleEditForm(title, content);
 	});
-	$('#formOne').submit(function(event){
+	$('#addForm').submit(function(event){
 		var noteTitle = $('input[name=title]').val();
 		var noteContent = $('textarea[name=content]').val();
 		var noteClass = Math.random();
@@ -83,18 +83,18 @@ $(document).ready(function(){
 		// tell the server a note was added, pass its title, content, and color
 		socket.emit("add note", noteTitle, noteContent, noteClass);
 		// clear the form and hide it
-		toggleFormOne();
+		toggleAddForm();
 		clearForm();
-	})
-	$('#formTwo').submit(function(event){
-		var noteTitle = $('#formTwo').find('input[name=title]').val();
-		var noteContent = $('#formTwo').find('textarea[name=content]').val();
+	});
+	$('#editForm').submit(function(event){
+		var noteTitle = $('#editForm').find('input[name=edit-title]').val();
+		var noteContent = $('#editForm').find('textarea[name=edit-content]').val();
 		event.preventDefault();
 		editedNote.children("h2").text(noteTitle);
 		editedNote.children("p").text(noteContent);
-		toggleFormTwo();
+		toggleEditForm();
 		clearForm();
-	})
+	});
 	
 	/*$("li a").click(function(){
 		$(this).remove();
