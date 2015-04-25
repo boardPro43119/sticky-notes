@@ -5,7 +5,7 @@ var express = require('express'),
 	http = require('http').Server(app),
 	io = require('socket.io')(http),
 	redisClient = redis.createClient(6379, "localhost"),
-	newNoteID=JSON.parse(redisClient.lindex("notes", 0))[3] || 1;
+	newNoteID=JSON.parse(redisClient.lindex("notes", 0))[3] + 1 || 1;
 
 app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res){
@@ -13,6 +13,7 @@ app.get('/', function(req, res){
 });
 
 io.sockets.on("connection", function(client){
+	// client.emit("clear screen");
 	console.log("client connected");
 	redisClient.lrange("notes", 0, -1, function(err, notes){
 		notes.reverse();
@@ -27,6 +28,11 @@ io.sockets.on("connection", function(client){
 		redisClient.lpush("notes", JSON.stringify([title, content, color, newNoteID]));
 		client.emit("add note", title, content, color, newNoteID);
 		newNoteID++;
+	});
+	client.on("remove note", function(title, content, color, id){
+		var noteKey = JSON.stringify([title, content, color, +id]);
+		console.log(noteKey);
+		redisClient.lrem("notes", 0, noteKey);
 	});
 });
 

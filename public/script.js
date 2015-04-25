@@ -102,9 +102,16 @@ $(document).ready(function(){
 	});*/
 	$("#main-wrapper ul").on("click", ".actions-container", function(event){
 		event.stopPropagation();
-		$(this).closest("a").remove();
+		var removedNote = $(this).closest("li");
+		var title = removedNote.children("a").children("h2").text();
+		var content = removedNote.children("a").children("p").text();
+		socket.emit("remove note", title, content, removedNote.attr("class"), removedNote.attr("id"));
+		removedNote.remove();
 	});
 
 	//
 	socket.on("add note", addNote);
+	// socket.on("clear screen", function(){
+	// 	$("ul").empty();
+	// });
 });
