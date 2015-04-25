@@ -5,7 +5,7 @@ var socket = io(), //load socket.io
 	editing = false;
 function addNote(title, content, color, id){
 	// Add new note to the end of the list
-	var newNote = $('<li id="'+id+'" class="'+color+'"><a><h2>'+title+'</h2><p>'+content+'<div class="actions-container"><i class="icon-remove"></i></div></p></a></li>');
+	var newNote = $('<li id="'+id+'" class="'+color+'"><a><h2>'+title+'</h2><p>'+content+'</p><div class="actions-container"><i class="icon-remove"></i></div></a></li>');
 	$("ul").prepend(newNote);
 }
 function toggleAddForm(){
@@ -89,6 +89,7 @@ $(document).ready(function(){
 	$('#editForm').submit(function(event){
 		var noteTitle = $('#editForm').find('input[name=edit-title]').val();
 		var noteContent = $('#editForm').find('textarea[name=edit-content]').val();
+		console.log(noteContent);
 		event.preventDefault();
 		editedNote.children("h2").text(noteTitle);
 		editedNote.children("p").text(noteContent);
