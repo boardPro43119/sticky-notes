@@ -29,10 +29,12 @@ io.sockets.on("connection", function(client){
 		client.emit("add note", title, content, color, newNoteID);
 		newNoteID++;
 	});
+	client.on("edit note", function(oldTitle, oldContent, color, id, newTitle, newContent){
+		redisClient.linsert("notes", "AFTER", JSON.stringify([oldTitle, oldContent, color, +id]), JSON.stringify([newTitle, newContent, color, +id]));
+		redisClient.lrem("notes", 0, JSON.stringify([oldTitle, oldContent, color, +id]));
+	});
 	client.on("remove note", function(title, content, color, id){
-		var noteKey = JSON.stringify([title, content, color, +id]);
-		console.log(noteKey);
-		redisClient.lrem("notes", 0, noteKey);
+		redisClient.lrem("notes", 0, JSON.stringify([title, content, color, +id]));
 	});
 });
 

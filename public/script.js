@@ -18,7 +18,7 @@ function toggleAddForm(){
 		$('.centered-form-container').show();
 		addFormOpen = true;
 	}
-};
+}
 function toggleEditForm(title, content){
 	if(editFormOpen){
 		$('.centered-form-container-two').hide();
@@ -29,10 +29,8 @@ function toggleEditForm(title, content){
 		editFormOpen = true;
 		$('.centered-form-container-two').children('form').find('input[name=edit-title]').val(title);
 		$('.centered-form-container-two').children('form').find('textarea[name=edit-content]').val(content);
-		console.log(title);
-		console.log(content);
 	}
-};
+}
 function clearForm(){
 	$(".centered-form-container").find("input, textarea").val("");
 	$(".centered-form-container-two").find("input, textarea").val("");
@@ -87,14 +85,20 @@ $(document).ready(function(){
 		clearForm();
 	});
 	$('#editForm').submit(function(event){
-		var noteTitle = $('#editForm').find('input[name=edit-title]').val();
-		var noteContent = $('#editForm').find('textarea[name=edit-content]').val();
-		console.log(noteContent);
+		// grab title and content from edited note
+		var oldTitle = editedNote.children("h2").text();
+		var oldContent = editedNote.children("p").text();
+		var color = editedNote.closest("li").attr("class");
+		var id = editedNote.closest("li").attr("id");
+		// grab updated title and content from form
+		var newTitle = $('#editForm').find('input[name=edit-title]').val();
+		var newContent = $('#editForm').find('textarea[name=edit-content]').val();
 		event.preventDefault();
-		editedNote.children("h2").text(noteTitle);
-		editedNote.children("p").text(noteContent);
+		editedNote.children("h2").text(newTitle);
+		editedNote.children("p").text(newContent);
 		toggleEditForm();
 		clearForm();
+		socket.emit("edit note", oldTitle, oldContent, color, id, newTitle, newContent);
 	});
 	
 	/*$("li a").click(function(){
